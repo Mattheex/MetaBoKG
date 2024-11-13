@@ -1,0 +1,68 @@
+@base <http://metaboKG.com/data/feature/> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix s:        <http://metaboKG.com/schema/> .
+# @prefix obo: <http://purl.obolibrary.org/obo#> .
+@prefix MS:       <http://purl.obolibrary.org/obo/MS_> .
+@prefix OBI:      <http://purl.obolibrary.org/obo/OBI_> .
+# @prefix PRIDE: <http://purl.obolibrary.org/obo/pride#> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+
+<sample_A>
+    a                       MS:1000457 ; # sample
+    rdfs:label              "sample A" ;
+    s:has_lcms_feature_list <feature_list_A> .
+
+# negative scan obo:MS_1000129
+# positive scan obo:MS_1000130
+
+<feature_list_A>
+    a                  MS:1001825 ; # feature list
+    rdfs:label         "LCMS feature list in neg ionization mode" ;
+    s:has_lcms_feature <feature_A>, <feature_B> .
+
+<feature_A>
+    a                           MS:1001828 ; # feature
+    rdfs:label                  "LCMS feature A" ;
+    s:has_ionization            MS:1000129 ;
+    s:has_feature_area          <Area_feature_A> ;
+    s:has_parent_mass           <Parent_mass_A> ;
+    s:has_relative_feature_area <Relative_area_feature_A> ;
+    s:has_retention_time        <Retention_time_A> ;
+    oboInOwl:id                 197.0 ;
+    s:has_usi                   <USI_A> .
+
+<USI_A>
+    a           MS:1003063 ;
+    OBI:0002135 "mzspec:MSV000091875:OK3_19_V107963_features_ms2_neg.mgf:scan:109" . # has specified value
+
+<Area_feature_A>
+    a           MS:1000801 ; # area peak picking
+    OBI:0001937 "0.0"^^xsd:float . # has specified numeric value
+
+<Relative_area_feature_A>
+    a           s:Normalized_area_peak_picking ;
+    OBI:0001937 "0.0"^^xsd:float .
+
+<Parent_mass_A>
+    a           MS:1002234 ; # selected precursor m/z
+    OBI:0001937 "517.3528442382812"^^xsd:float .
+# Subclass of
+# ion selection attribute
+# has_units some m/z
+# has value type some float
+
+<Retention_time_A>
+    a           MS:1000894 ; # retention time
+    OBI:0001937 "517.3528442382812"^^xsd:float .
+# Subclass of
+# peptidoform attribute
+# summary statistics of replicates
+# has_units some second
+# has_units some minute
+#has value type some float
+
+<feature_B>
+    a                MS:1001828 ; # feature
+    rdfs:label       "LCMS feature B" ;
+    s:has_ionization MS:1000129 .

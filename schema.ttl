@@ -1,0 +1,110 @@
+@base <http://metaboKG.com/schema/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix MS:   <http://purl.obolibrary.org/obo/MS_> .
+@prefix ms:   <http://purl.obolibrary.org/obo/ms#> .
+
+MS:1000801
+    ms:has_units MS:1000814 . # has unit counts per second
+
+<Normalized_area_peak_picking>
+    a               owl:Class ;
+    rdfs:label      "Normalized area peak picking" ;
+    rdfs:subClassOf MS:1000801, MS:1001999 .
+
+<SiriusAnnotation>
+    a               owl:Class ;
+    rdfs:label      "a Sirius Annotation" ;
+    rdfs:subClassOf MS:1001998 . # sophisticated numerical annotation procedure
+
+<has_lcms_feature_list>
+    a           owl:ObjectProperty ;
+    rdfs:label  "has lcms feature list" ;
+    rdfs:domain MS:1000457 ; # sample
+    rdfs:range  MS:1001828 . # feature list
+
+<has_ionization>
+    a           owl:ObjectProperty ;
+    rdfs:label  "has ionization" ;
+    rdfs:domain MS:1001828 ; # feature
+    rdfs:range  MS:1000465 . # scan polarity
+
+<has_lcms_feature>
+    a           owl:ObjectProperty ;
+    rdfs:label  "has lcms feature" ;
+    rdfs:domain MS:1001825 ; # feature list
+    rdfs:range  MS:1001828 . # feature
+
+<has_sirius_annotation>
+    a           owl:ObjectProperty ;
+    rdfs:label  "has sirius annotation" ;
+    rdfs:domain MS:1001828 ; # feature
+    rdfs:range  MS:1001825 . # feature list
+
+<has_feature_area>
+    a           owl:ObjectProperty ;
+    rdfs:label  "has feature area" ;
+    rdfs:domain MS:1001828 ; # feature
+    rdfs:range  MS:1000801 . # feature list
+
+<has_relative_feature_area>
+    a           owl:ObjectProperty ;
+    rdfs:label  "has relative feature area" ;
+    rdfs:domain MS:1001828 ; # feature
+    rdfs:range  <Normalized_area_peak_picking> .
+
+<has_parent_mass>
+    a           owl:ObjectProperty ;
+    rdfs:label  "has parent mass" ;
+    rdfs:domain MS:1001828 ; # feature
+    rdfs:range  MS:1002234 . # selected precursor m/z
+
+<has_retention_time>
+    a           owl:ObjectProperty ;
+    rdfs:label  "has retention time" ;
+    rdfs:domain MS:1001828 ; # feature
+    rdfs:range  MS:1000894 . # retention time
+
+<has_usi>
+    a           owl:ObjectProperty ;
+    rdfs:label  "has USI" ;
+    rdfs:domain MS:1001828 ; # feature
+    rdfs:range  MS:1003063 . # universal spectrum identifier
+
+
+<SMF_ID_REFS>
+    a            owl:ObjectProperty ;
+    rdfs:label   "References to based features" ;
+    rdfs:comment "References to all the features on which quantitation has been based" ;
+    rdfs:domain  MS:1003035 ;
+    rdfs:range   MS:1001828 .
+
+<database_identifier>
+    a            owl:ObjectProperty ;
+    rdfs:label   "A possible identifier for the small molecule" ;
+    rdfs:comment """A list of possible identifiers for the small molecule; multiple values MUST only be provided to
+               indicate ambiguity in the identification of the molecule and not to demonstrate different identifier
+               types for the same molecule. Alternative identifiers for  the same molecule MAY be provided as optional
+               columns.""" ;
+    rdfs:domain  MS:1003035 .
+
+<chemical_formula>
+    a            owl:ObjectProperty ;
+    rdfs:label   "A potential chemical formula of the reported compound" ;
+    rdfs:comment """The number of values provided MUST match the number of entities reported under “database_identifier”
+            , even if this leads to redundant reporting of information (i.e. if ambiguity can be resolved in the chemical
+            formula), and the validation software will throw an error if the number of “|” symbols does not match. “null” values
+            between bars are allowed. This should be specified in Hill notation (EA Hill 1900), i.e. elements in the order C, H
+            and then alphabetically all other elements. Counts of one may be omitted. Elements should be capitalized properly to
+            avoid confusion (e.g., “CO” vs. “Co”). The chemical formula reported should refer to the neutral form.""" ;
+    rdfs:domain  MS:1003035 ;
+    rdfs:range   MS:1000864 .
+
+<smiles>
+    a            owl:ObjectProperty ;
+    rdfs:label   "A potential molecule structure in the SMILES system" ;
+    rdfs:comment """The number of values provided MUST match the number of entities reported under “database_identifier”,
+                and the validation software will throw an error if the number of “|” symbols does not match. “null”
+                values between bars are allowed. """ ;
+    rdfs:domain  MS:1003035 ;
+    rdfs:range   MS:1000868 .
