@@ -11,12 +11,27 @@
 @prefix lda2:     <https://github.com/ThallingerLab/LDA2/> .
 
 <SML_1>
-    a                     MS:1003035 ; # small molecule
-    oboInOwl:id           1 ;
-    s:SMF_ID_REFS         f:feature_A ;
-    s:database_identifier lda2:P-PE_34:1 ;
-    s:chemical_formula    <chemical_formula_SML_1> .
+    a                                MS:1003035 ; # small molecule
+    rdfs:label                       "P-PE 34:1" ; # chemical_name
+    oboInOwl:id                      1 ;
+    s:SMF_ID_REFS                    f:feature_A ;
+    s:has_database_identifier        lda2:P-PE_34:1 ;
+    s:has_chemical_formula           <chemical_formula_SML_1> ;
+    # rdfs:seeAlso s:has_uri
+    s:has_theoretical_neutral_mass   <theoretical_neutral_mass_SML_1> ;
+    s:has_adduct_ions                MS:1002821 ; # M+H ion MS:1002820  adduct ion formula MS:1002813
+    s:has_reliability                <reliability _SML_1> ;
+    s:has_best_id_confidence_measure MS:1002890 .
+
 
 <chemical_formula_SML_1>
     a           MS:1000864 ;
     OBI:0002135 "C39H76NO7P" .
+
+<theoretical_neutral_mass_SML_1>
+    a           MS:1001117 ;
+    OBI:0001937 "701.5359411"^^xsd:double .
+
+<reliability _SML_1>
+    a           MS:1001117 ;
+    OBI:0002135 "Level 3" . # Level 0-4

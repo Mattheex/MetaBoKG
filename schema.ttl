@@ -3,6 +3,7 @@
 @prefix owl:  <http://www.w3.org/2002/07/owl#> .
 @prefix MS:   <http://purl.obolibrary.org/obo/MS_> .
 @prefix ms:   <http://purl.obolibrary.org/obo/ms#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
 MS:1000801
     ms:has_units MS:1000814 . # has unit counts per second
@@ -74,12 +75,12 @@ MS:1000801
 
 <SMF_ID_REFS>
     a            owl:ObjectProperty ;
-    rdfs:label   "References to based features" ;
+    rdfs:label   "Reference to base feature" ;
     rdfs:comment "References to all the features on which quantitation has been based" ;
     rdfs:domain  MS:1003035 ;
     rdfs:range   MS:1001828 .
 
-<database_identifier>
+<has_database_identifier>
     a            owl:ObjectProperty ;
     rdfs:label   "A possible identifier for the small molecule" ;
     rdfs:comment """A list of possible identifiers for the small molecule; multiple values MUST only be provided to
@@ -88,19 +89,19 @@ MS:1000801
                columns.""" ;
     rdfs:domain  MS:1003035 .
 
-<chemical_formula>
+<has_chemical_formula>
     a            owl:ObjectProperty ;
     rdfs:label   "A potential chemical formula of the reported compound" ;
     rdfs:comment """The number of values provided MUST match the number of entities reported under “database_identifier”
-            , even if this leads to redundant reporting of information (i.e. if ambiguity can be resolved in the chemical
-            formula), and the validation software will throw an error if the number of “|” symbols does not match. “null” values
-            between bars are allowed. This should be specified in Hill notation (EA Hill 1900), i.e. elements in the order C, H
-            and then alphabetically all other elements. Counts of one may be omitted. Elements should be capitalized properly to
-            avoid confusion (e.g., “CO” vs. “Co”). The chemical formula reported should refer to the neutral form.""" ;
+                , even if this leads to redundant reporting of information (i.e. if ambiguity can be resolved in the chemical
+                formula), and the validation software will throw an error if the number of “|” symbols does not match. “null” values
+                between bars are allowed. This should be specified in Hill notation (EA Hill 1900), i.e. elements in the order C, H
+                and then alphabetically all other elements. Counts of one may be omitted. Elements should be capitalized properly to
+                avoid confusion (e.g., “CO” vs. “Co”). The chemical formula reported should refer to the neutral form.""" ;
     rdfs:domain  MS:1003035 ;
     rdfs:range   MS:1000864 .
 
-<smiles>
+<has_smiles>
     a            owl:ObjectProperty ;
     rdfs:label   "A potential molecule structure in the SMILES system" ;
     rdfs:comment """The number of values provided MUST match the number of entities reported under “database_identifier”,
@@ -108,3 +109,77 @@ MS:1000801
                 values between bars are allowed. """ ;
     rdfs:domain  MS:1003035 ;
     rdfs:range   MS:1000868 .
+
+<has_inchi>
+    a            owl:ObjectProperty ;
+    rdfs:label   "A potential standard InChI given substance" ;
+    rdfs:comment """A potential standard IUPAC International Chemical Identifier (InChI) of the given substance.
+                The number of values provided MUST match the number of entities reported under “database_identifier”,
+                even if this leads to redundant information being reported (i.e. if ambiguity can be resolved in the
+                InChi)""" ;
+    rdfs:domain  MS:1003035 ;
+    rdfs:range   MS:1003403 .
+
+<has_theoretical_neutral_mass>
+    a            owl:ObjectProperty ;
+    rdfs:label   "The small molecule’s precursor’s theoretical neutral mass" ;
+    rdfs:comment """The number of values provided MUST match the number of entities reported under “database_identifier”,
+                and the validation software will throw an error if the number of “|” symbols does not match. “null” values
+                (in general and between bars) are allowed for molecules that have not been identified only,
+                or for molecules where the neutral mass cannot be calculated. In these cases, the SML entry SHOULD reference
+                features in which exp_mass_to_charge values are captured.""" ;
+    rdfs:domain  MS:1003035 ;
+    rdfs:range   MS:1001117 .
+
+<has_adduct_ions>
+    a            owl:ObjectProperty ;
+    rdfs:label   "A detected adduct ion for this molecule" ;
+    rdfs:comment """following the general style in the 2013 IUPAC recommendations on terms relating to MS e.g. [M+H]1+,
+                [M+Na]1+, [M+NH4]1+, [M-H]1-, [M+Cl]1-, [M+H]1+. If the adduct classification is ambiguous with regards
+                to identification evidence it MAY be null.""" ;
+    rdfs:domain  MS:1003035 ;
+    rdfs:range   MS:1000353 .
+
+<has_reliability>
+    a            owl:ObjectProperty ;
+    rdfs:label   "The reliability of the given molecule identification" ;
+    rdfs:comment """This must be supplied by the resource and MUST be reported as an integer between 1-4:
+                    1. identified metabolite (1)
+                    2. putatively annotated compound (2)
+                    3. putatively characterized compound class (3)
+                    4. unknown compound (4)
+                The MSI has recently discussed an extension of the original four level scheme into a five level scheme
+                MS:1002896 (compound identification confidence level) with levels:
+                    0. isolated, pure compound, full stereochemistry (0)
+                    1. reference standard match or full 2D structure (1)
+                    2. unambiguous diagnostic evidence (literature, database) (2)
+                    3. most likely structure, including isomers, substance class or substructure match (3)
+                    4. unknown compound (4)""" ;
+    rdfs:domain  MS:1003035 ;
+    rdfs:range   MS:1001477 .
+
+<has_best_id_confidence_measure>
+    a           owl:ObjectProperty ;
+    rdfs:label  "The approach or database search that identified this small molecule with highest confidence." ;
+    rdfs:domain MS:1003035 ;
+    rdfs:range  MS:1002888 .
+
+<has_best_id_confidence_value>
+    a            owl:ObjectProperty ;
+    rdfs:label   "The best confidence measure in identification for the given molecule across all assays." ;
+    rdfs:comment """The type of score MUST be defined in the metadata section. If the small molecule was not identified
+                by the specified search engine, “null” MUST be reported. If the confidence measure does not report
+                a numerical confidence value, “null” SHOULD be reported.""" ;
+    rdfs:domain  MS:1003035 ;
+    rdfs:range   MS:1001153 . # search engine specific score
+
+
+#<has_chemical_name> a owl:ObjectProperty ; # replaced by rdfs:label
+#    rdfs:label "A possible chemical/common name for the molecule";
+#    rdfs:comment """A possible chemical/common name for the small molecule, or general description if a chemical name
+#                is unavailable. Multiple names are only to demonstrate ambiguity in the identification. The number of
+#                values provided MUST match the number of entities reported under “database_identifier”""";
+#    rdfs:domain  MS:1003035 ;
+#    rdfs:range   xsd:string .
+
+

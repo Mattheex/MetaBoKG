@@ -8,6 +8,8 @@
 # @prefix PRIDE: <http://purl.obolibrary.org/obo/pride#> .
 @prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
 
+### FEATURE GRAPH BASED ON ENPKG ONTOLOGY
+
 <sample_A>
     a                       MS:1000457 ; # sample
     rdfs:label              "sample A" ;
